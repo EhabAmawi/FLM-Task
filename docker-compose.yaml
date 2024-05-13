@@ -1,0 +1,28 @@
+services:
+  backend:
+    platform: linux/amd64
+    container_name: flk-backend
+    build: ./src
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - 9424:80
+    networks:
+        - flk-network
+  mysql:
+    platform: linux/amd64
+    container_name: flk-mysql
+    image: mysql:8.0
+    networks:
+        - flk-network
+    ports:
+      - 3309:3306
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: flk
+        MYSQL_USER: flk
+        MYSQL_PASSWORD: flk
+
+networks:
+    flk-network:
+        driver: bridge
