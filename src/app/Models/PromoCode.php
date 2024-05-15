@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\PromoCodeDiscountType;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PromoCode extends Model
@@ -27,4 +28,9 @@ class PromoCode extends Model
         'expires_at' => 'date',
         'discount_type' => PromoCodeDiscountType::class,
     ];
+
+    public function usages(): HasMany
+    {
+        return $this->hasMany(PromoCodeUsage::class);
+    }
 }
