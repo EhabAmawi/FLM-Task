@@ -18,6 +18,7 @@ class CreatePromoCodeRequest extends FormRequest
             'max_uses_per_user' => ['nullable', 'integer'],
 
             'users_ids' => ['array'],
+            'users_ids.*' => ['integer'],
 
             'discount' => ['required', 'integer'],
             'discount_type' => ['required', 'in:percentage,value'],
