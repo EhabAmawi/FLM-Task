@@ -1,6 +1,6 @@
 ## Overview
 
-This project is a web application built with PHP and JavaScript, using npm and composer for package management.
+This project is a web application built with PHP Laravel 11. It provides an API for managing promo codes and applying them to a price. The project uses Laravel Sanctum for API authentication.
 
 ## Setup
 
