@@ -10,7 +10,7 @@ class ValidatePromoCodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'price' => ['required', 'number', 'min:0.1'],
+            'price' => ['required', 'numeric', 'min:0.1'],
             'code' => ['required', 'string'],
         ];
     }
