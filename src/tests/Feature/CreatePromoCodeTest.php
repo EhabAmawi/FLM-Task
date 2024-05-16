@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class CreatePromoCodeTest extends TestCase
@@ -12,6 +14,11 @@ class CreatePromoCodeTest extends TestCase
 
     public function test_successful_promoCode_creation(): void
     {
+        Sanctum::actingAs(
+            User::factory()->create(['is_admin' => true]),
+            ['promo-codes.create', 'promo-codes.validate']
+        );
+
         // generate a test for create promo code http request
         $response = $this->postJson('/api/admin/promo-codes', [
             'code' => 'TESTCODE',
@@ -44,8 +51,35 @@ class CreatePromoCodeTest extends TestCase
         ]);
     }
 
+    public function test_promoCode_creation_with_normal_user(): void
+    {
+        Sanctum::actingAs(
+            User::factory()->create(['is_admin' => true]),
+            ['promo-codes.validate']
+        );
+
+        // generate a test for create promo code http request
+        $response = $this->postJson('/api/admin/promo-codes', [
+            'code' => 'TESTCODE',
+            'discount' => 10,
+            'discount_type' => 'percentage',
+            'max_uses' => 10,
+            'max_uses_per_user' => 2,
+            'users_ids' => [1, 2, 3],
+            'expires_at' => '2024-12-31',
+        ]);
+
+        // assert the response status code
+        $response->assertStatus(403);
+    }
+
     public function test_promoCode_creation_failure_on_expires_at(): void
     {
+        Sanctum::actingAs(
+            User::factory()->create(['is_admin' => true]),
+            ['promo-codes.create', 'promo-codes.validate']
+        );
+
         // generate a test for create promo code http request
         $response = $this->postJson('/api/admin/promo-codes', [
             'code' => 'TESTCODE',
@@ -71,6 +105,11 @@ class CreatePromoCodeTest extends TestCase
 
     public function test_promoCode_creation_failure_on_discount_type(): void
     {
+        Sanctum::actingAs(
+            User::factory()->create(['is_admin' => true]),
+            ['promo-codes.create', 'promo-codes.validate']
+        );
+
         // generate a test for create promo code http request
         $response = $this->postJson('/api/admin/promo-codes', [
             'code' => 'TESTCODE',
@@ -96,6 +135,11 @@ class CreatePromoCodeTest extends TestCase
 
     public function test_promoCode_creation_failure_on_code_max_length(): void
     {
+        Sanctum::actingAs(
+            User::factory()->create(['is_admin' => true]),
+            ['promo-codes.create', 'promo-codes.validate']
+        );
+
         // generate a test for create promo code http request
         $response = $this->postJson('/api/admin/promo-codes', [
             'code' => Str::random(256),
@@ -120,6 +164,11 @@ class CreatePromoCodeTest extends TestCase
 
     public function test_promoCode_creation_failure_on_expires_at_date_format(): void
     {
+        Sanctum::actingAs(
+            User::factory()->create(['is_admin' => true]),
+            ['promo-codes.create', 'promo-codes.validate']
+        );
+
         // generate a test for create promo code http request
         $response = $this->postJson('/api/admin/promo-codes', [
             'code' => 'TESTCODE',
@@ -144,6 +193,11 @@ class CreatePromoCodeTest extends TestCase
 
     public function test_promoCode_creation_failure_on_expires_at_after_today_date_format(): void
     {
+        Sanctum::actingAs(
+            User::factory()->create(['is_admin' => true]),
+            ['promo-codes.create', 'promo-codes.validate']
+        );
+
         // generate a test for create promo code http request
         $response = $this->postJson('/api/admin/promo-codes', [
             'code' => 'TESTCODE',
@@ -169,6 +223,11 @@ class CreatePromoCodeTest extends TestCase
 
     public function test_promoCode_creation_failure_on_discount_required(): void
     {
+        Sanctum::actingAs(
+            User::factory()->create(['is_admin' => true]),
+            ['promo-codes.create', 'promo-codes.validate']
+        );
+
         // generate a test for create promo code http request
         $response = $this->postJson('/api/admin/promo-codes', [
             'code' => 'TESTCODE',
@@ -193,6 +252,11 @@ class CreatePromoCodeTest extends TestCase
 
     public function test_promoCode_creation_failure_on_discount_type_required(): void
     {
+        Sanctum::actingAs(
+            User::factory()->create(['is_admin' => true]),
+            ['promo-codes.create', 'promo-codes.validate']
+        );
+
         // generate a test for create promo code http request
         $response = $this->postJson('/api/admin/promo-codes', [
             'code' => 'TESTCODE',
@@ -217,6 +281,11 @@ class CreatePromoCodeTest extends TestCase
 
     public function test_promoCode_creation_failure_on_discount_type_in(): void
     {
+        Sanctum::actingAs(
+            User::factory()->create(['is_admin' => true]),
+            ['promo-codes.create', 'promo-codes.validate']
+        );
+
         // generate a test for create promo code http request
         $response = $this->postJson('/api/admin/promo-codes', [
             'code' => 'TESTCODE',
@@ -242,6 +311,11 @@ class CreatePromoCodeTest extends TestCase
 
     public function test_promoCode_creation_failure_on_discount_integer(): void
     {
+        Sanctum::actingAs(
+            User::factory()->create(['is_admin' => true]),
+            ['promo-codes.create', 'promo-codes.validate']
+        );
+
         // generate a test for create promo code http request
         $response = $this->postJson('/api/admin/promo-codes', [
             'code' => 'TESTCODE',
@@ -267,6 +341,11 @@ class CreatePromoCodeTest extends TestCase
 
     public function test_promoCode_creation_failure_on_max_uses_integer(): void
     {
+        Sanctum::actingAs(
+            User::factory()->create(['is_admin' => true]),
+            ['promo-codes.create', 'promo-codes.validate']
+        );
+
         // generate a test for create promo code http request
         $response = $this->postJson('/api/admin/promo-codes', [
             'code' => 'TESTCODE',
@@ -292,6 +371,11 @@ class CreatePromoCodeTest extends TestCase
 
     public function test_promoCode_creation_failure_on_max_uses_per_user_integer(): void
     {
+        Sanctum::actingAs(
+            User::factory()->create(['is_admin' => true]),
+            ['promo-codes.create', 'promo-codes.validate']
+        );
+
         // generate a test for create promo code http request
         $response = $this->postJson('/api/admin/promo-codes', [
             'code' => 'TESTCODE',
@@ -317,6 +401,11 @@ class CreatePromoCodeTest extends TestCase
 
     public function test_promoCode_creation_failure_on_users_ids_array(): void
     {
+        Sanctum::actingAs(
+            User::factory()->create(['is_admin' => true]),
+            ['promo-codes.create', 'promo-codes.validate']
+        );
+
         // generate a test for create promo code http request
         $response = $this->postJson('/api/admin/promo-codes', [
             'code' => 'TESTCODE',
@@ -342,6 +431,11 @@ class CreatePromoCodeTest extends TestCase
 
     public function test_promoCode_creation_failure_on_users_ids_array_values_integer(): void
     {
+        Sanctum::actingAs(
+            User::factory()->create(['is_admin' => true]),
+            ['promo-codes.create', 'promo-codes.validate']
+        );
+
         // generate a test for create promo code http request
         $response = $this->postJson('/api/admin/promo-codes', [
             'code' => 'TESTCODE',
@@ -363,5 +457,13 @@ class CreatePromoCodeTest extends TestCase
                 'users_ids.0',
             ],
         ]);
+    }
+
+    private function createAdminUser(): void
+    {
+        Sanctum::actingAs(
+            User::factory()->create(['is_admin' => true]),
+            ['promo-codes.create', 'promo-codes.validate']
+        );
     }
 }
