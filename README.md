@@ -29,3 +29,11 @@ The following API endpoints are available:
 - `POST /api/promo-codes/validate`: Validate a promo code & Apply it on the given price.
  - can be used to validate the promo code and apply it on the given price. where the user can use the promo code to get a discount on the price.
 
+
+## Notes:
+- The project uses Laravel Sanctum for API authentication.
+- I didn't use the `laravel/passport` package because it's a full OAuth2 server implementation and it's more complex than Sanctum.
+- I didn't use the `spatie/laravel-permission` package because it's more complex than Sanctum and I didn't need the full functionality of it.
+- I used MySQL as the database because it's the most popular database for Laravel projects. and it delivers the very good performance.
+- I used the `make` command to simplify the setup and testing process, and to make it easier for the developers to run the commands.
+- I didn't use Repository pattern because it's not necessary for this project. and it's more complex than the current implementation. and also I think Laravel Eloquent is doing almost the same job as the Repository pattern.
