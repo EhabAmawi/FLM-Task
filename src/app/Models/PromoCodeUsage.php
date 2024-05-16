@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PromoCodeUsage extends Model
 {
-    protected $table = 'promo_code_usages';
+    protected $table = 'promo_codes_usage';
 
     public const CREATED_AT = 'used_at';
     public const UPDATED_AT = null;
